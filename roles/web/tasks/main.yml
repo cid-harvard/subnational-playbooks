@@ -1,0 +1,39 @@
+---
+- name: install system packages
+  apt: pkg={{item}} state=present
+  with_items: system_packages
+- name: install virtualenv
+  pip: name=virtualenv
+- name: create srv dir
+  file: dest={{atlas_prefix}} owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
+- name: create log dir
+  file: dest=/var/log/django/ owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
+- name: get code
+  git: repo={{atlas_git_repo}}
+       dest={{atlas_prefix}}
+       version={{atlas_git_version}}
+
+- name: install atlas python requirements
+  pip: requirements={{atlas_prefix}}/requirements.txt virtualenv={{atlas_prefix}}/env/
+
+- name: Remove existing nginx config
+  file: path=/etc/nginx/sites-enabled/default state=absent
+
+- name: copy in nginx site config file
+  template: src=nginx.{{atlas_environment}} dest=/etc/nginx/sites-enabled/{{atlas_environment}}
+
+- name: copy in nginx main config files
+  template: src=nginx.conf.{{atlas_environment}} dest=/etc/nginx/nginx.conf
+
+- name: copy in uwsgi config
+  template: owner={{atlas_webuser}} src=atlas.uwsgi.ini dest=/etc/uwsgi/apps-enabled/atlas.ini
+
+- name: copy in supervisor config
+  template: owner={{atlas_webuser}} src=supervisor.atlas.conf dest=/etc/supervisor/conf.d/atlas.conf
+
+
+- name: reload nginx service
+  service: name=nginx state=reloaded
+
+- name: reload uwsgi
+  supervisorctl: name=uwsgi state=restarted

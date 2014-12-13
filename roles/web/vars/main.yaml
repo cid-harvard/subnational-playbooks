@@ -1,0 +1,11 @@
+---
+system_packages:
+    - language-pack-en
+    - git
+    - python3
+    - python-pip
+    - python-dev
+    - nginx
+    - supervisor
+    - uwsgi
+    - uwsgi-plugin-python
