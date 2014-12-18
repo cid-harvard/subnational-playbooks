@@ -3,9 +3,9 @@ system_packages:
     - language-pack-en
     - git
     - python3
-    - python-pip
-    - python-dev
+    - python3-pip
+    - python3-dev
     - nginx
     - supervisor
     - uwsgi
-    - uwsgi-plugin-python
+    - uwsgi-plugin-python3
