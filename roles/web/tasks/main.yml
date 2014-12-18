@@ -12,6 +12,7 @@
   git: repo={{atlas_git_repo}}
        dest={{atlas_prefix}}
        version={{atlas_git_version}}
+       accept_hostkey=true
 
 - name: install atlas python requirements
   pip: requirements={{atlas_prefix}}/requirements.txt virtualenv={{atlas_prefix}}/env/
