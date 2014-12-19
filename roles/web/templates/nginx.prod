@@ -1,16 +1,9 @@
-upstream django {
+upstream flask {
     server 127.0.0.1:3031;
 }
 
 server {
-    listen 80;
-    server_name www.atlas.cid.harvard.edu;
-    return 301 $scheme://atlas.cid.harvard.edu$request_uri;
-}
-
-server {
     listen 80 default_server;
-    server_name atlas.cid.harvard.edu;
     charset utf-8;
 
     set $project_path {{atlas_prefix}};
@@ -32,18 +25,9 @@ server {
 
     # Serve main site
     location / {
-
-        # Cache dropdown requests on client
-        location ~ ^/api/dropdowns/.*$ {
-            expires 15m;
-            uwsgi_pass  django;
-            #proxy_set_header Host $http_host;
-            include /etc/nginx/uwsgi_params;
-        }
-
-    uwsgi_pass  django;
-    #proxy_set_header Host $http_host;
-    include /etc/nginx/uwsgi_params;
+        expires 15m;
+        uwsgi_pass  flask;
+        include /etc/nginx/uwsgi_params;
     }
 
 }
