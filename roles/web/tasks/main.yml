@@ -24,7 +24,7 @@
   pip: requirements={{atlas_prefix}}/requirements.txt virtualenv={{atlas_prefix}}/env/ virtualenv_command=pyvenv-3.4
 
 - name: install atlas python dev requirements
-  pip: requirements={{atlas_prefix}}/requirements.txt virtualenv={{atlas_prefix}}/env/ virtualenv_command=pyvenv-3.4
+  pip: requirements={{atlas_prefix}}/requirements-dev.txt virtualenv={{atlas_prefix}}/env/ virtualenv_command=pyvenv-3.4
 
 - name: Remove existing nginx config
   file: path=/etc/nginx/sites-enabled/default state=absent
