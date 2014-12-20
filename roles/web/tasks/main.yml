@@ -35,8 +35,9 @@
 - name: Install packages based on package.json.
   npm: path=/srv/colombia-prototype/
 
-#- name: Install packages based on bower.json.
-#  bower: path=/srv/colombia-prototype/
+- name: Install packages based on bower.json.
+  shell: "cd /srv/colombia-prototype/; bower install /srv/colombia-prototype/bower.json"
+  sudo: no
 
 - name: Remove existing nginx config
   file: path=/etc/nginx/sites-enabled/default state=absent
