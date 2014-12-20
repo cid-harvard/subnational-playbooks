@@ -1,3 +1,6 @@
+uwsgi_cache_path /tmp/nginx_cache levels=1:2
+                 keys_zone=microcache:5m max_size=512m;
+
 upstream flask {
     server 127.0.0.1:3031;
 }
@@ -26,7 +29,12 @@ server {
     # Serve main site
     location / {
         expires 15m;
+        gzip on;
         uwsgi_pass  flask;
+        uwsgi_cache microcache;
+        uwsgi_cache_key $scheme$host$request_method$request_uri;
+        uwsgi_cache_valid 200 1d;
+        uwsgi_cache_use_stale updating;
         include /etc/nginx/uwsgi_params;
     }
 
