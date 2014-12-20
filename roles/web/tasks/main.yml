@@ -14,7 +14,7 @@
 - name: install pip from get-pip into existing pyvenv
   shell: ". {{atlas_prefix}}/env/bin/activate; curl https://bootstrap.pypa.io/get-pip.py | python3"
 
-- name: get code
+- name: get backend code
   git: repo={{atlas_git_repo}}
        dest={{atlas_prefix}}
        version={{atlas_git_version}}
@@ -25,6 +25,18 @@
 
 - name: install atlas python dev requirements
   pip: requirements={{atlas_prefix}}/requirements-dev.txt virtualenv={{atlas_prefix}}/env/ virtualenv_command=pyvenv-3.4
+
+- name: install bower
+  npm: name=bower global=yes
+
+- name: install gulp
+  npm: name=gulp global=yes
+
+- name: Install packages based on package.json.
+  npm: path=/srv/colombia-prototype/
+
+#- name: Install packages based on bower.json.
+#  bower: path=/srv/colombia-prototype/
 
 - name: Remove existing nginx config
   file: path=/etc/nginx/sites-enabled/default state=absent
@@ -43,7 +55,6 @@
 
 - name: copy in database
   copy: owner={{atlas_webuser}} src=/Users/makmana/colombia/src/colombia/database.db dest={{atlas_prefix}}/src/colombia/
-  tags: debug
 
 - name: reload nginx service
   service: name=nginx state=reloaded
