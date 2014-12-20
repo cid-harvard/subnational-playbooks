@@ -19,23 +19,33 @@ server {
         deny all;
     }
 
-    # Serve static files directly instead of through Django
-    location ~ ^/(static|media)/(.*)$ {
-        alias $project_path/$1/$2;
-        access_log  off;
-        expires 15m;
-    }
-
     # Serve main site
-    location / {
+    location ~ /api {
         expires 15m;
         gzip on;
+
         uwsgi_pass  flask;
         uwsgi_cache microcache;
         uwsgi_cache_key $scheme$host$request_method$request_uri;
         uwsgi_cache_valid 200 1d;
         uwsgi_cache_use_stale updating;
+
+        # serve in a subdirectory
+        uwsgi_param SCRIPT_NAME /api;
+        uwsgi_modifier1 30;
+
         include /etc/nginx/uwsgi_params;
+    }
+
+    location ~ ^/(bower_components)/(.*)$ {
+        alias /srv/colombia-prototype/$1/$2;
+        access_log  off;
+        expires 15m;
+    }
+
+    location ~ / {
+        root /srv/colombia-prototype/dist/;
+        expires 15m;
     }
 
 }
