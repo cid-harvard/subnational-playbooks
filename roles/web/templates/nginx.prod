@@ -20,7 +20,7 @@ server {
     }
 
     # Serve main site
-    location ~ /api {
+    location /api {
         expires 15m;
         gzip on;
 
@@ -30,20 +30,16 @@ server {
         uwsgi_cache_valid 200 1d;
         uwsgi_cache_use_stale updating;
 
-        # serve in a subdirectory
-        uwsgi_param SCRIPT_NAME /api;
-        uwsgi_modifier1 30;
-
         include /etc/nginx/uwsgi_params;
     }
 
     location ~ ^/(bower_components)/(.*)$ {
         alias /srv/colombia-prototype/$1/$2;
-        access_log  off;
+        access_log off;
         expires 15m;
     }
 
-    location ~ / {
+    location / {
         root /srv/colombia-prototype/dist/;
         expires 15m;
     }
