@@ -11,3 +11,4 @@ system_packages:
     - uwsgi-plugin-python3
     - npm
     - nodejs-legacy
+    - ruby
