@@ -20,11 +20,21 @@
        version={{atlas_git_version}}
        accept_hostkey=true
 
+- name: get frontend code
+  git: repo=git@github.com:cid-harvard/colombia-prototype.git
+       dest=/srv/colombia-prototype
+       version=master
+       accept_hostkey=true
+
 - name: install atlas python requirements
   pip: requirements={{atlas_prefix}}/requirements.txt virtualenv={{atlas_prefix}}/env/ virtualenv_command=pyvenv-3.4
 
 - name: install atlas python dev requirements
   pip: requirements={{atlas_prefix}}/requirements-dev.txt virtualenv={{atlas_prefix}}/env/ virtualenv_command=pyvenv-3.4
+
+- name: install sass
+  gem: name=sass
+  tags: debug
 
 - name: install bower
   npm: name=bower global=yes
@@ -35,9 +45,15 @@
 - name: Install packages based on package.json.
   npm: path=/srv/colombia-prototype/
 
+- name: Create bower dir
+  file: path=/srv/colombia-prototype/bower_components/ state=directory owner={{atlas_webuser}}
+
 - name: Install packages based on bower.json.
   shell: "cd /srv/colombia-prototype/; bower install /srv/colombia-prototype/bower.json"
   sudo: no
+
+- name: gulp rebuild
+  shell: "cd /srv/colombia-prototype/; gulp rebuild"
 
 - name: Remove existing nginx config
   file: path=/etc/nginx/sites-enabled/default state=absent
