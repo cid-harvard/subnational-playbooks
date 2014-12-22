@@ -1,0 +1,7 @@
+---
+atlas_db_import_location: /vagrant_shared/atlas_dump.sql.gz
+atlas_prefix: /srv/colombia
+atlas_git_version: master
+atlas_git_repo: git@github.com:cid-harvard/colombia.git
+atlas_webuser: ubuntu
+atlas_environment: prod
