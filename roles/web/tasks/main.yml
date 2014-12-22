@@ -33,8 +33,7 @@
        accept_hostkey=true
 
 - name: install sass
-  gem: name=sass
-  tags: debug
+  command: bash -lc "gem install sass"
 
 - name: install bower
   npm: name=bower global=yes
