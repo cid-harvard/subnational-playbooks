@@ -63,6 +63,10 @@
 - name: copy in nginx main config files
   template: src=nginx.conf.{{atlas_environment}} dest=/etc/nginx/nginx.conf
 
+- name: generate htpasswd file
+  htpasswd: name=atlas password={{atlas_password}} path=/etc/nginx/htpasswd
+  when: atlas_password_protected == True
+
 - name: copy in uwsgi config
   template: owner={{atlas_webuser}} src=atlas.uwsgi.ini dest=/etc/uwsgi/apps-enabled/atlas.ini
 

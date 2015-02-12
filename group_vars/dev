@@ -5,3 +5,5 @@ atlas_git_version: master
 atlas_git_repo: git@github.com:cid-harvard/colombia.git
 atlas_webuser: vagrant
 atlas_environment: prod
+atlas_password_protected: false
+atlas_password: blah
