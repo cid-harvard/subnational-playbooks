@@ -11,6 +11,9 @@ server {
 
     set $project_path {{atlas_prefix}};
 
+    gzip on;
+    expires 15m;
+
     # Status URL for monitoring
     location /status {
         stub_status on;
@@ -21,8 +24,6 @@ server {
 
     # Serve main site
     location /api {
-        expires 15m;
-        gzip on;
 
         uwsgi_pass  flask;
         uwsgi_cache microcache;
@@ -36,12 +37,10 @@ server {
     location ~ ^/(bower_components)/(.*)$ {
         alias /srv/colombia-prototype/$1/$2;
         access_log off;
-        expires 15m;
     }
 
     location / {
         root /srv/colombia-prototype/dist/;
-        expires 15m;
     }
 
 }
