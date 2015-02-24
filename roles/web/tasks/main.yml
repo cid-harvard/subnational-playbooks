@@ -32,6 +32,11 @@
        version=spanish
        accept_hostkey=true
 
+- name: Correct API URL in frontend code
+  lineinfile:   dest=/srv/colombia-prototype/app/scripts/main.js
+                regexp="^\s*apiURL\s*=.*,$"
+                line="apiURL = \"http://127.0.0.1:8001/api/\","
+
 - name: install sass
   command: bash -lc "gem install sass"
 
