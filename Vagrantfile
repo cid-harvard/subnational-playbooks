@@ -4,6 +4,12 @@
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
+ATLAS_WEB_IP="192.168.33.11"
+ATLAS_WEB_PORT=8001
+
+puts "Atlas host configured to run on #{ATLAS_WEB_IP}"
+puts "Atlas web port forwarded locally to http://127.0.0.1:#{ATLAS_WEB_PORT}/"
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
@@ -19,11 +25,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
-  config.vm.network :forwarded_port, guest: 80, host: 8001 # app
+  config.vm.network :forwarded_port, guest: 80, host:ATLAS_WEB_PORT  # app
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network :private_network, ip: "192.168.33.11"
+  config.vm.network :private_network, ip: ATLAS_WEB_IP
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -61,7 +67,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         "dev" => "default"
       }
       # Use this to override ansible playbook variables
-      ansible.extra_vars = { var1: "value1"}
+      ansible.extra_vars = {
+        var1: "value1"
+      }
   end
 
 end
