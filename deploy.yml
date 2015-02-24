@@ -1,7 +1,6 @@
 ---
 - hosts: all
   sudo: yes
-  sudo_user: "{{atlas_webuser}}"
   roles:
       - role: web
 
