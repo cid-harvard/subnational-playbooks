@@ -1,24 +1,36 @@
+upstream flask {
+    server 127.0.0.1:8001;
+}
+
 server {
     listen 80 default_server;
+    charset utf-8;
 
     set $project_path {{atlas_prefix}};
 
-    # Temp files only for phantomjs process
-    location ~ ^/(celery-temp-file-.*)$ {
+    gzip on;
+
+    # Status URL for monitoring
+    location /status {
+        stub_status on;
+        access_log off;
         allow 127.0.0.1;
         deny all;
-        alias /tmp/ramdisk/$1;
-    }
-
-    # Serve static files directly instead of through Django
-    location ~ ^/(static|media)/(.*)$ {
-        alias $project_path/$1/$2;
     }
 
     # Serve main site
+    location /api {
+        proxy_pass http://flask;
+        include /etc/nginx/proxy_params;
+    }
+
+    location ~ ^/(bower_components)/(.*)$ {
+        alias /srv/colombia-prototype/$1/$2;
+        access_log off;
+    }
+
     location / {
-        proxy_set_header Host $http_host;
-        proxy_pass http://127.0.0.1:8001;
+        root /srv/colombia-prototype/dist/;
     }
 
 }
