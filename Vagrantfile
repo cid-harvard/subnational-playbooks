@@ -7,8 +7,10 @@ VAGRANTFILE_API_VERSION = "2"
 ATLAS_WEB_IP="192.168.33.11"
 ATLAS_WEB_PORT=8001
 
+puts "========================="
 puts "Atlas host configured to run on #{ATLAS_WEB_IP}"
 puts "Atlas web port forwarded locally to http://127.0.0.1:#{ATLAS_WEB_PORT}/"
+puts "========================="
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # All Vagrant configuration is done here. The most common configuration
