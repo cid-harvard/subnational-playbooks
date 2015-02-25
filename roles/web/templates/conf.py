@@ -1,5 +1,5 @@
 DEBUG = {{atlas_environment != 'prod'}}
-SECRET_KEY = "{{atlas_session_key|password_hash('sha512')}}"
+SECRET_KEY = "{{atlas_session_key}}"
 
 SENTRY_DSN = ""
 
