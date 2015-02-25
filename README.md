@@ -31,12 +31,12 @@ To easily install a virtualized dev environment from scratch:
 
 4. Begin installing (10min)
   - Do `vagrant plugin install bindfs`.
-  - Do `vagrant up`. Should take 5-10 minutes. Take note of the address that
-    pops up in the output that you can use to get to the webapp.
+  - Do `vagrant up`. Should take 5-10 minutes. 
 
 5. Test it out!
-  - Run `vagrant ssh` to get in, then `cd /srv/colombia/` and run `make dev` to
-    run the backend server.
+  - Run `vagrant ssh` to get in. Take note of the address that pops up in the
+    output that you can use to get to the webapp. Then `cd /srv/colombia/` and
+    run `make dev` to run the backend server.
 
 Basic Usage
 -----------
