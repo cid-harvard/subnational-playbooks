@@ -96,6 +96,10 @@
   htpasswd: name=atlas password={{atlas_password}} path=/etc/nginx/htpasswd
   when: atlas_password_protected == True
 
+- name: copy in flask config
+  template: src=conf.py dest={{atlas_prefix}}/conf/prod.py
+  when: atlas_environment == 'prod'
+
 - name: copy in uwsgi config
   template: owner={{atlas_webuser}} src=atlas.uwsgi.ini dest=/etc/uwsgi/apps-enabled/atlas.ini
 
