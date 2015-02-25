@@ -4,6 +4,7 @@ atlas_prefix: /srv/colombia
 atlas_git_version: master
 atlas_git_repo: git@github.com:cid-harvard/colombia.git
 atlas_webuser: vagrant
+atlas_api_url: http://127.0.0.1:8001/api/
 atlas_environment: dev
 atlas_session_key: kittens
 atlas_password_protected: false
