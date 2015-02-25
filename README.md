@@ -23,27 +23,20 @@ To easily install a virtualized dev environment from scratch:
   the command line, and by running virtualbox.
 
 2. Clone the code (30s):
-  - Run `git clone https://github.com/cid-harvard/atlas-playbooks.git && cd atlas-playbooks`
-  - Run `git submodule init && git submodule update` to get all the submodules. 
+  - Run `git clone https://github.com/cid-harvard/colombia-playbooks.git && cd
+    colombia-playbooks`.
 
-3. Make sure you have the data (30s - 5min):
-  - Put a gzip-compressed atlas db dump into the vagrant_shared directory and
-  name it atlas_dump.sql.gz. You can find it here:
-  https://5f8e910dc73e5b802e61-c8f472c1dc7a646930d1a89882f69f37.ssl.cf5.rackcdn.com/atlas_dump.sql.gz
-  and the file should have a shasum of 903e69a3ff70ad33f434abd9cf7726fd45fa5fdd.
+3. Make sure you have the data (1min):
+  - Get database.db from mali and put it into `colombia-playbooks`.
 
-4. Begin installing (30min)
+4. Begin installing (10min)
   - Do `vagrant plugin install bindfs`.
-  - Do `vagrant up`. Sit back and wait until all the stuff downloads. It'll download a 350mb VM
-  image, around that much more for all the required python and ubuntu packages.
-  The “importing atlas DB” part takes the longest.
+  - Do `vagrant up`. Should take 5-10 minutes. Take note of the address that
+    pops up in the output that you can use to get to the webapp.
 
 5. Test it out!
-  - Run `vagrant ssh` to get in, then `cd /srv/atlas/` and `source
-  env/bin/activate` to get into the virtualenv. Then go in `django_files` and
-  run `./manage.py runserver 0.0.0.0:8001`. The 0.0.0.0 is important to get
-  django to answer requests that come from outside the VM.
-  - Go to http://127.0.0.1:8000/ with your browser on the outside.
+  - Run `vagrant ssh` to get in, then `cd /srv/colombia/` and run `make dev` to
+    run the backend server.
 
 Basic Usage
 -----------
