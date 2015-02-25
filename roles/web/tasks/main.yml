@@ -9,6 +9,9 @@
 - name: create frontend dir
   file: dest=/srv/colombia-prototype owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
 
+- name: create labs dir
+  file: dest=/srv/colombia-labs owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
+
 - name: create log dir
   file: dest=/var/log/django/ owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
 
@@ -71,6 +74,13 @@
 
 - name: gulp rebuild
   shell: "cd /srv/colombia-prototype/; gulp rebuild"
+  sudo_user: "{{atlas_webuser}}"
+
+- name: get labs code
+  git: repo=git@github.com:cid-harvard/colombia-labs.git
+       dest=/srv/colombia-labs
+       version=master
+       accept_hostkey=true
   sudo_user: "{{atlas_webuser}}"
 
 - name: Remove existing nginx config
