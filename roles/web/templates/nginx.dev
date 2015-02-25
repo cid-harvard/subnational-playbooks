@@ -19,7 +19,8 @@ server {
     }
 
     # Serve main site
-    location /api {
+    location ~ ^/api {
+        rewrite ^/api/(.*)$ /$1 break;
         proxy_pass http://flask;
         include /etc/nginx/proxy_params;
     }
