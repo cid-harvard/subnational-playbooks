@@ -45,5 +45,6 @@ vagrant_ansible_inventory_default
 # Atlas stuff
 atlas/
 colombia/
+colombia-labs/
 
 vagrant_shared/atlas_dump.sql.gz

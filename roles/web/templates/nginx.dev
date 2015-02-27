@@ -30,12 +30,12 @@ server {
         access_log off;
     }
 
-    location / {
-        root /srv/colombia-prototype/dist/;
+    location /labs/ {
+        alias /srv/colombia-labs/;
     }
 
-    location /labs {
-        root /srv/colombia-labs/;
+    location / {
+        root /srv/colombia-prototype/dist/;
     }
 
 }

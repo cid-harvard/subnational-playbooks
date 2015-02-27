@@ -88,6 +88,7 @@
 
 - name: copy in nginx site config file
   template: src=nginx.{{atlas_environment}} dest=/etc/nginx/sites-enabled/{{atlas_environment}}
+  tags: debug
 
 - name: copy in nginx main config files
   template: src=nginx.conf.{{atlas_environment}} dest=/etc/nginx/nginx.conf
@@ -111,6 +112,7 @@
 
 - name: reload nginx service
   service: name=nginx state=reloaded
+  tags: debug
 
 - name: reload uwsgi
   supervisorctl: name=uwsgi state=restarted
