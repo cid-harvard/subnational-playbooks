@@ -116,3 +116,4 @@
 
 - name: reload uwsgi
   supervisorctl: name=uwsgi state=restarted
+  when: atlas_environment == 'prod'
