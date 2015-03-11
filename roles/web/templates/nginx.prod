@@ -44,6 +44,10 @@ server {
         access_log off;
     }
 
+    location /labs/ {
+        alias /srv/colombia-labs/;
+    }
+
     location / {
         root /srv/colombia-prototype/dist/;
     }
