@@ -12,8 +12,18 @@
 - name: create labs dir
   file: dest=/srv/colombia-labs owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
 
+- name: create core dir
+  file: dest=/srv/atlas_core owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
+
 - name: create log dir
   file: dest=/var/log/django/ owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
+
+- name: get atlas core
+  git: repo=git@github.com:cid-harvard/atlas_core.git
+       dest=/srv/atlas_core
+       version=master
+       accept_hostkey=true
+  sudo_user: "{{atlas_webuser}}"
 
 - name: get backend code
   git: repo={{atlas_git_repo}}
