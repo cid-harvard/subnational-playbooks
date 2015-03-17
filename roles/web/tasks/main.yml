@@ -108,7 +108,7 @@
   template: owner={{atlas_webuser}} src=supervisor.atlas.conf dest=/etc/supervisor/conf.d/atlas.conf
 
 - name: copy in database
-  copy: owner={{atlas_webuser}} src={{atlas_db_import_location}} dest={{atlas_prefix}}/src/colombia/
+  copy: owner={{atlas_webuser}} src={{atlas_db_import_location}} dest={{atlas_prefix}}/src/colombia/database.db
 
 - name: reload nginx service
   service: name=nginx state=reloaded
