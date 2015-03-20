@@ -51,7 +51,7 @@
 - name: get frontend code
   git: repo=git@github.com:cid-harvard/colombia-prototype.git
        dest=/srv/colombia-prototype
-       version=spanish
+       version={{atlas_git_version}}
        accept_hostkey=true
   sudo_user: "{{atlas_webuser}}"
 
@@ -98,7 +98,6 @@
 
 - name: copy in nginx site config file
   template: src=nginx.{{atlas_environment}} dest=/etc/nginx/sites-enabled/{{atlas_environment}}
-  tags: debug
 
 - name: copy in nginx main config files
   template: src=nginx.conf.{{atlas_environment}} dest=/etc/nginx/nginx.conf
