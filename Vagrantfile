@@ -51,6 +51,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.bindfs.bind_folder "/srv/colombia/", "/srv/colombia/"
   config.vm.synced_folder "./colombia-labs/", "/srv/colombia-labs/", :create => true, :nfs => true
   config.bindfs.bind_folder "/srv/colombia-labs/", "/srv/colombia-labs/"
+  config.vm.synced_folder "./colombia-prototype/", "/srv/colombia-prototype/"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
