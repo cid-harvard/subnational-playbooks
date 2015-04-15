@@ -24,13 +24,16 @@ To easily install a virtualized dev environment from scratch:
 
 2. Clone the code (30s):
   - Run `git clone https://github.com/cid-harvard/colombia-playbooks.git && cd
-    colombia-playbooks`.
+    colombia-playbooks`
+  - Run `git clone https://github.com/cid-harvard/colombia-labs.git`
+  - Run `git clone https://github.com/cid-harvard/colombia-prototype.git`
+  - Basically you want the above two directories cloned in the playbooks dir.
 
 3. Make sure you have the data (1min):
   - Get database.db from mali and put it into `colombia-playbooks`.
 
 4. Begin installing (10min)
-  - Do `vagrant plugin install bindfs`.
+  - Do `vagrant plugin install vagrant-bindfs`.
   - Do `vagrant up`. Should take 5-10 minutes. 
 
 5. Test it out!
