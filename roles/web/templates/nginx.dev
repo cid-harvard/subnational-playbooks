@@ -18,6 +18,11 @@ server {
         deny all;
     }
 
+    {% if atlas_password_protected == True %}
+    auth_basic "atlas-beta";
+    auth_basic_user_file htpasswd;
+    {% endif %}
+
     # Serve main site
     location ~ ^/api {
         rewrite ^/api/(.*)$ /$1 break;
