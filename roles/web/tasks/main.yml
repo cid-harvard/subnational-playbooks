@@ -7,13 +7,13 @@
   file: dest={{atlas_prefix}} owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
 
 - name: create frontend dir
-  file: dest=/srv/colombia-prototype owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
+  file: dest=/srv/colombia-frontend owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
 
-- name: create labs dir
-  file: dest=/srv/colombia-labs owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
+- name: create vis-toolkit dir
+  file: dest=/srv/vis-toolkit owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
 
 - name: create log dir
-  file: dest=/var/log/django/ owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
+  file: dest=/var/log/colombia/ owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
 
 - name: get backend code
   git: repo={{atlas_git_repo}}
@@ -37,51 +37,52 @@
 - name: install atlas python dev requirements
   pip: requirements={{atlas_prefix}}/requirements-dev.txt virtualenv={{atlas_prefix}}/env/ virtualenv_command=pyvenv-3.4
   sudo_user: "{{atlas_webuser}}"
+  when: atlas_environment == 'dev'
 
 - name: get frontend code
-  git: repo=git@github.com:cid-harvard/colombia-prototype.git
-       dest=/srv/colombia-prototype
-       version=spanish
-       accept_hostkey=true
-  sudo_user: "{{atlas_webuser}}"
-
-- name: Correct API URL in frontend code
-  lineinfile:   dest=/srv/colombia-prototype/app/scripts/main.js
-                regexp="^\s*apiURL\s*=.*,$"
-                line="apiURL = \"{{atlas_api_url}}\","
-  sudo_user: "{{atlas_webuser}}"
-
-- name: install sass
-  command: bash -lc "gem install sass"
-
-- name: install bower
-  npm: name=bower global=yes
-
-- name: install gulp
-  npm: name=gulp global=yes
-
-- name: Install packages based on package.json.
-  npm: path=/srv/colombia-prototype/
-  sudo_user: "{{atlas_webuser}}"
-
-- name: Create bower dir
-  file: path=/srv/colombia-prototype/bower_components/ state=directory owner={{atlas_webuser}}
-  sudo_user: "{{atlas_webuser}}"
-
-- name: Install packages based on bower.json.
-  shell: "cd /srv/colombia-prototype/; bower install /srv/colombia-prototype/bower.json"
-  sudo_user: "{{atlas_webuser}}"
-
-- name: gulp rebuild
-  shell: "cd /srv/colombia-prototype/; gulp rebuild"
-  sudo_user: "{{atlas_webuser}}"
-
-- name: get labs code
-  git: repo=git@github.com:cid-harvard/colombia-labs.git
-       dest=/srv/colombia-labs
+  git: repo=git@github.com:cid-harvard/atlas-colombia.git
+       dest=/srv/colombia-frontend
        version=master
        accept_hostkey=true
   sudo_user: "{{atlas_webuser}}"
+
+#- name: Correct API URL in frontend code
+#  lineinfile:   dest=/srv/colombia-prototype/app/scripts/main.js
+#                regexp="^\s*apiURL\s*=.*,$"
+#                line="apiURL = \"{{atlas_api_url}}\","
+#  sudo_user: "{{atlas_webuser}}"
+
+#- name: install sass
+#  command: bash -lc "gem install sass"
+#
+#- name: install ember
+#  npm: name=ember-cli global=yes
+#
+#- name: install bower
+#  npm: name=bower global=yes
+
+#- name: Install packages based on package.json.
+#  npm: path=/srv/colombia-frontend/
+#  sudo_user: "{{atlas_webuser}}"
+#
+#- name: Create bower dir
+#  file: path=/srv/colombia-frontend/bower_components/ state=directory owner={{atlas_webuser}}
+#  sudo_user: "{{atlas_webuser}}"
+#
+#- name: Install packages based on bower.json.
+#  shell: "cd /srv/colombia-frontend/; bower install /srv/colombia-frontend/bower.json"
+#  sudo_user: "{{atlas_webuser}}"
+#
+#- name: ember build
+#  shell: "cd /srv/colombia-frontend/; ember build --environment production"
+#  sudo_user: "{{atlas_webuser}}"
+#
+#- name: get vis-toolkit code
+#  git: repo=git@github.com:cid-harvard/vis-toolkit.git
+#      dest=/srv/vis-toolkit
+#       version=master
+#       accept_hostkey=true
+#  sudo_user: "{{atlas_webuser}}"
 
 - name: Remove existing nginx config
   file: path=/etc/nginx/sites-enabled/default state=absent
@@ -108,7 +109,7 @@
   template: owner={{atlas_webuser}} src=supervisor.atlas.conf dest=/etc/supervisor/conf.d/atlas.conf
 
 - name: copy in database
-  copy: owner={{atlas_webuser}} src=database.db dest={{atlas_prefix}}/src/colombia/
+  copy: owner={{atlas_webuser}} src=database.db dest={{atlas_prefix}}/colombia/
 
 - name: reload nginx service
   service: name=nginx state=reloaded

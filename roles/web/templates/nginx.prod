@@ -30,6 +30,8 @@ server {
     # Serve main site
     location /api {
 
+        add_header Access-Control-Allow-Origin http://cid-harvard.github.io/;
+
         uwsgi_pass  flask;
         uwsgi_cache microcache;
         uwsgi_cache_key $scheme$host$request_method$request_uri;

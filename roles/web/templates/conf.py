@@ -3,8 +3,9 @@ SECRET_KEY = "{{atlas_session_key}}"
 
 SENTRY_DSN = ""
 
-SQLALCHEMY_ECHO = DEBUG
+SQLALCHEMY_ECHO = False
 SQLALCHEMY_DATABASE_URI = "sqlite:///database.db"
+SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 CACHE_TYPE = "simple"
 CACHE_KEY_PREFIX = "colombia::"
