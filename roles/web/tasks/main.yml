@@ -46,6 +46,9 @@
        accept_hostkey=true
   sudo_user: "{{atlas_webuser}}"
 
+- name: copy in frontend dist
+  unarchive: owner={{atlas_webuser}} src=dist.tar.gz dest=/srv/colombia-frontend/
+
 #- name: Correct API URL in frontend code
 #  lineinfile:   dest=/srv/colombia-prototype/app/scripts/main.js
 #                regexp="^\s*apiURL\s*=.*,$"
@@ -117,4 +120,13 @@
 
 - name: reload uwsgi
   supervisorctl: name=uwsgi state=restarted
+  when: atlas_environment == 'prod'
+
+- name: Send notification message via Slack
+  local_action:
+    module: slack
+    domain: cid-harvard.slack.com
+    token: {{atlas_slack_token}}
+    msg: "Deployed {{ atlas_git_repo }}/{{ atlas_git_version }} to {{ ansible_ssh_host }}."
+  sudo: no
   when: atlas_environment == 'prod'

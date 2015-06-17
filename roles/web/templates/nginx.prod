@@ -51,7 +51,7 @@ server {
     }
 
     location / {
-        root /srv/colombia-prototype/dist/;
+        root /srv/colombia-frontend/dist/;
     }
 
 }
