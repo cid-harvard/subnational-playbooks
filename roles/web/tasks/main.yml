@@ -126,7 +126,7 @@
   local_action:
     module: slack
     domain: cid-harvard.slack.com
-    token: {{atlas_slack_token}}
+    token: "{{ atlas_slack_token }}"
     msg: "Deployed {{ atlas_git_repo }}/{{ atlas_git_version }} to {{ ansible_ssh_host }}."
   sudo: no
   when: atlas_environment == 'prod'
