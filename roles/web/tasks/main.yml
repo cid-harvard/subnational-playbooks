@@ -127,6 +127,6 @@
     module: slack
     domain: cid-harvard.slack.com
     token: "{{ atlas_slack_token }}"
-    msg: "Deployed {{ atlas_git_repo }}/{{ atlas_git_version }} to {{ ansible_ssh_host }}."
+    msg: "Deployed {{ atlas_git_repo }}/{{ atlas_git_version }} to {{ ansible_ssh_host }} with environment type {{atlas_environment}}."
   sudo: no
   when: atlas_environment == 'prod'
