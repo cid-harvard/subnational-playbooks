@@ -1,5 +1,5 @@
 ---
-- pause: prompt="Deploying {{ atlas_git_repo }}/{{ atlas_git_version }} to {{ ansible_ssh_host }} with environment type {{atlas_environment}}. Ctrl+C to cancel!"
+- pause: prompt="Deploying backend ({{atlas_git_version}}) and frontend ({{atlas_frontend_git_version}}) to {{ansible_ssh_host}} with environment type {{atlas_environment}}. Ctrl+C to cancel!"
 
 - name: install system packages
   apt: pkg={{item}} state=present
@@ -78,6 +78,6 @@
     module: slack
     domain: cid-harvard.slack.com
     token: "{{ atlas_slack_token }}"
-    msg: "Deployed {{ atlas_git_repo }}/{{ atlas_git_version }} to {{ ansible_ssh_host }} with environment type {{atlas_environment}}."
+    msg: "Deployed backend ({{ atlas_git_version }}) and frontend ({{atlas_frontend_git_version}}) to {{ ansible_ssh_host }} with environment type {{atlas_environment}}."
   sudo: no
   when: atlas_environment == 'prod'
