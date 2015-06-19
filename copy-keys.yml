@@ -1,0 +1,9 @@
+---
+- hosts: all
+  sudo: yes
+  tasks:
+    - name: copy keys
+      authorized_key: user="{{atlas_webuser}}" key="{{item}}"
+      with_file:
+          - public_keys/quinn
+          - public_keys/mali
