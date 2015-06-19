@@ -22,7 +22,7 @@ atlas_ember_environment:
 
 # Vis-toolkit Settings
 atlas_vistk_path: "{{atlas_prefix}}/vis-toolkit/"
-atlas_vistk_git_version: master
+atlas_vistk_git_version: dev
 atlas_vistk_git_repo: git@github.com:cid-harvard/vis-toolkit.git
 
 # Misc Settings
