@@ -1,4 +1,6 @@
 ---
+- pause: prompt="Deploying {{ atlas_git_repo }}/{{ atlas_git_version }} to {{ ansible_ssh_host }} with environment type {{atlas_environment}}. Ctrl+C to cancel!"
+
 - name: install system packages
   apt: pkg={{item}} state=present
   with_items: system_packages
@@ -6,11 +8,8 @@
 - name: create srv dir
   file: dest={{atlas_prefix}} owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
 
-- name: create frontend dir
-  file: dest=/srv/colombia-frontend owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
-
 - name: create vis-toolkit dir
-  file: dest=/srv/vis-toolkit owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
+  file: dest={{atlas_vistk_path}} owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
 
 - name: create log dir
   file: dest=/var/log/colombia/ owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
@@ -39,85 +38,14 @@
   sudo_user: "{{atlas_webuser}}"
   when: atlas_environment == 'dev'
 
-- name: get frontend code
-  git: repo=git@github.com:cid-harvard/atlas-colombia.git
-       dest=/srv/colombia-frontend
-       version=master
-       accept_hostkey=true
+- include: frontend.yml
   sudo_user: "{{atlas_webuser}}"
-  tags: frontend
-
-#- name: copy in frontend dist
-#  unarchive: owner={{atlas_webuser}} src=dist.tar.gz dest=/srv/colombia-frontend/
-
-#- name: Correct API URL in frontend code
-#  lineinfile:   dest=/srv/colombia-prototype/app/scripts/main.js
-#                regexp="^\s*apiURL\s*=.*,$"
-#                line="apiURL = \"{{atlas_api_url}}\","
-#  sudo_user: "{{atlas_webuser}}"
-
-- name: install sass
-  gem: name=sass state=latest
-  tags: frontend
-
-- name: install ember
-  npm: name=ember-cli state=latest global=yes
-  tags: frontend
-
-- name: install grunt-cli
-  npm: name=grunt-cli state=latest global=yes
-  tags: frontend
-
-- name: Install frontend packages based on package.json.
-  npm: path=/srv/colombia-frontend/ state=latest
-  sudo_user: "{{atlas_webuser}}"
-  tags: frontend
-
-- name: Install packages based on bower.json.
-  bower: path=/srv/colombia-frontend/
-  sudo_user: "{{atlas_webuser}}"
-  tags: frontend
-
-- name: get vis-toolkit code
-  git: repo=git@github.com:cid-harvard/vis-toolkit.git
-      dest=/srv/vis-toolkit
-       version=master
-       accept_hostkey=true
-  sudo_user: "{{atlas_webuser}}"
-  tags: frontend
-
-- name: Install vis-toolkit packages based on package.json.
-  npm: path=/srv/vis-toolkit/
-  sudo_user: "{{atlas_webuser}}"
-  tags: frontend
-
-- name: run grunt
-  shell: "cd /srv/vis-toolkit/; grunt concat"
-  sudo_user: "{{atlas_webuser}}"
-  tags: frontend
-
-- name: bower link
-  shell: "cd /srv/vis-toolkit/; bower link"
-  sudo_user: "{{atlas_webuser}}"
-  tags: frontend
-
-- name: bower link vis-toolkit
-  shell: "cd /srv/colombia-frontend/; bower link vis-toolkit"
-  sudo_user: "{{atlas_webuser}}"
-  tags: frontend
-
-- name: ember build
-  shell: "cd /srv/colombia-frontend/; ember build --environment=production"
-  sudo_user: "{{atlas_webuser}}"
-  environment: "{{atlas_ember_environment}}"
-  tags: ember
 
 - name: Remove existing nginx config
   file: path=/etc/nginx/sites-enabled/default state=absent
 
 - name: copy in nginx site config file
   template: src=nginx.{{atlas_environment}} dest=/etc/nginx/sites-enabled/{{atlas_environment}}
-  tags: debug
 
 - name: copy in nginx main config files
   template: src=nginx.conf.{{atlas_environment}} dest=/etc/nginx/nginx.conf
@@ -141,7 +69,6 @@
 
 - name: reload nginx service
   service: name=nginx state=reloaded
-  tags: debug
 
 - name: reload uwsgi
   supervisorctl: name=uwsgi state=restarted

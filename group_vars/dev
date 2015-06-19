@@ -1,10 +1,30 @@
 ---
+# General Settings
+atlas_webuser: vagrant
+atlas_environment: prod
 atlas_prefix: /srv/colombia
+
+# Backend Settings
+atlas_path: "{{atlas_prefix}}/colombia/"
 atlas_git_version: master
 atlas_git_repo: git@github.com:cid-harvard/colombia.git
-atlas_webuser: vagrant
-atlas_api_url: http://127.0.0.1:8001/api/
-atlas_environment: prod
+
 atlas_session_key: kittens
+
+# Frontend Settings
+atlas_frontend_path: "{{atlas_prefix}}/frontend/"
+atlas_frontend_git_version: master
+atlas_frontend_git_repo: git@github.com:cid-harvard/atlas-colombia.git
+
+atlas_ember_environment:
+  GA: thing
+  OTHER_ENV: otherthing
+
+# Vis-toolkit Settings
+atlas_vistk_path: "{{atlas_prefix}}/vis-toolkit/"
+atlas_vistk_git_version: master
+atlas_vistk_git_repo: git@github.com:cid-harvard/vis-toolkit.git
+
+# Misc Settings
 atlas_password_protected: false
 atlas_password: blah

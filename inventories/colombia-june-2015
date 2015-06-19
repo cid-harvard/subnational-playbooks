@@ -1,4 +1,4 @@
 default ansible_ssh_host=colombia-june-2015.cid-labs.com ansible_ssh_port=22 ansible_ssh_private_key_file=~/.ssh/hks-atlas-web.pem ansible_ssh_user=ubuntu
 
-[prod]
+[colombia-june-2015]
 default

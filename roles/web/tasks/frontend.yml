@@ -1,0 +1,54 @@
+---
+- name: create frontend dir
+  file: dest={{atlas_frontend_path}} owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
+
+- name: get frontend code
+  git: repo={{atlas_frontend_git_repo}}
+       dest={{atlas_frontend_path}}
+       version={{atlas_frontend_git_version}}
+       accept_hostkey=true
+
+- name: install sass
+  gem: name=sass state=latest
+
+- name: install ember
+  npm: name=ember-cli state=latest global=yes
+
+- name: install grunt-cli
+  npm: name=grunt-cli state=latest global=yes
+
+- name: Install frontend packages based on package.json.
+  npm: path={{atlas_frontend_path}} state=latest
+
+- name: Install packages based on bower.json.
+  bower: path={{atlas_frontend_path}}
+
+- name: get vis-toolkit code
+  git: repo={{atlas_vistk_git_repo}}
+       dest={{atlas_vistk_path}}
+       version={{atlas_vistk_git_version}}
+       accept_hostkey=true
+
+- name: Install vis-toolkit packages based on package.json.
+  npm: path={{atlas_vistk_path}}
+
+- name: run grunt
+  shell: "grunt concat"
+  args:
+      chdir: "{{atlas_vistk_path}}"
+
+- name: bower link
+  shell: "bower link"
+  args:
+      chdir: "{{atlas_vistk_path}}"
+
+- name: bower link vis-toolkit
+  shell: "bower link vis-toolkit"
+  args:
+      chdir: "{{atlas_frontend_path}}"
+
+- name: ember build
+  shell: "ember build --environment=production"
+  args:
+      chdir: "{{atlas_frontend_path}}"
+  environment: "{{atlas_ember_environment}}"
