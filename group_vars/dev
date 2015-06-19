@@ -2,7 +2,7 @@
 # General Settings
 atlas_webuser: vagrant
 atlas_environment: prod
-atlas_prefix: /srv/colombia
+atlas_prefix: /srv
 
 # Backend Settings
 atlas_path: "{{atlas_prefix}}/colombia/"

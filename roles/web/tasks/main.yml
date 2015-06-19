@@ -6,7 +6,7 @@
   with_items: system_packages
 
 - name: create srv dir
-  file: dest={{atlas_prefix}} owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
+  file: dest={{atlas_path}} owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
 
 - name: create vis-toolkit dir
   file: dest={{atlas_vistk_path}} owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
@@ -16,25 +16,25 @@
 
 - name: get backend code
   git: repo={{atlas_git_repo}}
-       dest={{atlas_prefix}}
+       dest={{atlas_path}}
        version={{atlas_git_version}}
        accept_hostkey=true
   sudo_user: "{{atlas_webuser}}"
 
 - name: create a new venv
-  shell: "pyvenv-3.4 --without-pip {{atlas_prefix}}/env/"
+  shell: "pyvenv-3.4 --without-pip {{atlas_path}}/env/"
   sudo_user: "{{atlas_webuser}}"
 
 - name: install pip from get-pip into existing pyvenv
-  shell: ". {{atlas_prefix}}/env/bin/activate; curl https://bootstrap.pypa.io/get-pip.py | python3"
+  shell: ". {{atlas_path}}/env/bin/activate; curl https://bootstrap.pypa.io/get-pip.py | python3"
   sudo_user: "{{atlas_webuser}}"
 
 - name: install atlas python requirements
-  pip: requirements={{atlas_prefix}}/requirements.txt virtualenv={{atlas_prefix}}/env/ virtualenv_command=pyvenv-3.4
+  pip: requirements={{atlas_path}}/requirements.txt virtualenv={{atlas_path}}/env/ virtualenv_command=pyvenv-3.4
   sudo_user: "{{atlas_webuser}}"
 
 - name: install atlas python dev requirements
-  pip: requirements={{atlas_prefix}}/requirements-dev.txt virtualenv={{atlas_prefix}}/env/ virtualenv_command=pyvenv-3.4
+  pip: requirements={{atlas_path}}/requirements-dev.txt virtualenv={{atlas_path}}/env/ virtualenv_command=pyvenv-3.4
   sudo_user: "{{atlas_webuser}}"
   when: atlas_environment == 'dev'
 
@@ -55,7 +55,7 @@
   when: atlas_password_protected == True
 
 - name: copy in flask config
-  template: src=conf.py dest={{atlas_prefix}}/conf/prod.py
+  template: src=conf.py dest={{atlas_path}}/conf/prod.py
   when: atlas_environment == 'prod'
 
 - name: copy in uwsgi config
@@ -65,7 +65,7 @@
   template: owner={{atlas_webuser}} src=supervisor.atlas.conf dest=/etc/supervisor/conf.d/atlas.conf
 
 - name: copy in database
-  copy: owner={{atlas_webuser}} src=database.db dest={{atlas_prefix}}/colombia/
+  copy: owner={{atlas_webuser}} src=database.db dest={{atlas_path}}/colombia/
 
 - name: reload nginx service
   service: name=nginx state=reloaded

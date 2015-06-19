@@ -6,7 +6,7 @@ server {
     listen 80 default_server;
     charset utf-8;
 
-    set $project_path {{atlas_prefix}};
+    set $project_path {{atlas_path}};
 
     gzip on;
 
