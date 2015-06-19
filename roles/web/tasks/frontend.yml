@@ -25,6 +25,12 @@
   npm: path={{atlas_frontend_path}}
   sudo_user: "{{atlas_webuser}}"
 
+- name: bower unlink vis-toolkit
+  shell: "bower unlink vis-toolkit"
+  args:
+      chdir: "{{atlas_frontend_path}}"
+  sudo_user: "{{atlas_webuser}}"
+
 - name: Install packages based on bower.json.
   bower: path={{atlas_frontend_path}}
   sudo_user: "{{atlas_webuser}}"
