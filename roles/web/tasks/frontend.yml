@@ -7,6 +7,7 @@
        dest={{atlas_frontend_path}}
        version={{atlas_frontend_git_version}}
        accept_hostkey=true
+  sudo_user: "{{atlas_webuser}}"
 
 - name: install sass
   gem: name=sass state=latest
@@ -22,41 +23,44 @@
 
 - name: Install frontend packages based on package.json.
   npm: path={{atlas_frontend_path}}
-  sudo: no
+  sudo_user: "{{atlas_webuser}}"
 
 - name: Install packages based on bower.json.
   bower: path={{atlas_frontend_path}}
-  sudo: no
+  sudo_user: "{{atlas_webuser}}"
 
 - name: get vis-toolkit code
   git: repo={{atlas_vistk_git_repo}}
        dest={{atlas_vistk_path}}
        version={{atlas_vistk_git_version}}
        accept_hostkey=true
+  sudo_user: "{{atlas_webuser}}"
 
 - name: Install vis-toolkit packages based on package.json.
   npm: path={{atlas_vistk_path}}
-  sudo: no
+  sudo_user: "{{atlas_webuser}}"
 
 - name: run grunt
   shell: "grunt concat"
   args:
       chdir: "{{atlas_vistk_path}}"
+  sudo_user: "{{atlas_webuser}}"
 
 - name: bower link
   shell: "bower link"
-  sudo: no
   args:
       chdir: "{{atlas_vistk_path}}"
+  sudo_user: "{{atlas_webuser}}"
 
 - name: bower link vis-toolkit
   shell: "bower link vis-toolkit"
-  sudo: no
   args:
       chdir: "{{atlas_frontend_path}}"
+  sudo_user: "{{atlas_webuser}}"
 
 - name: ember build
   shell: "cd {{atlas_frontend_path}}; ember build --environment=production"
   args:
       chdir: "{{atlas_frontend_path}}"
   environment: "{{atlas_ember_environment}}"
+  sudo_user: "{{atlas_webuser}}"

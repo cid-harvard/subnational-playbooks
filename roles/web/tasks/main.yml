@@ -39,7 +39,6 @@
   when: atlas_environment == 'dev'
 
 - include: frontend.yml
-  sudo_user: "{{atlas_webuser}}"
 
 - name: Remove existing nginx config
   file: path=/etc/nginx/sites-enabled/default state=absent
