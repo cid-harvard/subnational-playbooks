@@ -41,17 +41,8 @@ server {
         include /etc/nginx/uwsgi_params;
     }
 
-    location ~ ^/(bower_components)/(.*)$ {
-        alias /srv/colombia-prototype/$1/$2;
-        access_log off;
-    }
-
-    location /labs/ {
-        alias /srv/colombia-labs/;
-    }
-
     location / {
-        root /srv/colombia-frontend/dist/;
+        root {{atlas_frontend_path}};
     }
 
 }
