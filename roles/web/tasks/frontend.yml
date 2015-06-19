@@ -12,16 +12,21 @@
   gem: name=sass state=latest
 
 - name: install ember
-  npm: name=ember-cli state=latest global=yes
+  npm: name=ember-cli version=0.2.7 global=yes
 
 - name: install grunt-cli
-  npm: name=grunt-cli state=latest global=yes
+  npm: name=grunt-cli version=0.1.13 global=yes
+
+- name: install bower
+  npm: name=bower version=1.4.1 global=yes
 
 - name: Install frontend packages based on package.json.
-  npm: path={{atlas_frontend_path}} state=latest
+  npm: path={{atlas_frontend_path}}
+  sudo: no
 
 - name: Install packages based on bower.json.
   bower: path={{atlas_frontend_path}}
+  sudo: no
 
 - name: get vis-toolkit code
   git: repo={{atlas_vistk_git_repo}}
@@ -31,6 +36,7 @@
 
 - name: Install vis-toolkit packages based on package.json.
   npm: path={{atlas_vistk_path}}
+  sudo: no
 
 - name: run grunt
   shell: "grunt concat"
@@ -39,16 +45,18 @@
 
 - name: bower link
   shell: "bower link"
+  sudo: no
   args:
       chdir: "{{atlas_vistk_path}}"
 
 - name: bower link vis-toolkit
   shell: "bower link vis-toolkit"
+  sudo: no
   args:
       chdir: "{{atlas_frontend_path}}"
 
 - name: ember build
-  shell: "ember build --environment=production"
+  shell: "cd {{atlas_frontend_path}}; ember build --environment=production"
   args:
       chdir: "{{atlas_frontend_path}}"
   environment: "{{atlas_ember_environment}}"
