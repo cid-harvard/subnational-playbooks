@@ -42,7 +42,7 @@ server {
     }
 
     location / {
-        root {{atlas_frontend_path}};
+        root {{atlas_frontend_path}}dist/;
     }
 
 }
