@@ -50,3 +50,4 @@ colombia-labs/
 vagrant_shared/atlas_dump.sql.gz
 
 database.db
+databases/
