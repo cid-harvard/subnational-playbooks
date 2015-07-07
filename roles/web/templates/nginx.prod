@@ -30,7 +30,7 @@ server {
     # Serve main site
     location /api {
 
-        add_header Access-Control-Allow-Origin *;
+        add_header Access-Control-Allow-Origin * always;
 
         uwsgi_pass  flask;
         uwsgi_cache microcache;
