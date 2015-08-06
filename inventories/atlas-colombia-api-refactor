@@ -1,4 +1,0 @@
-default ansible_ssh_host=52.3.54.93 ansible_ssh_port=22 ansible_ssh_private_key_file=~/.ssh/hks-atlas-web.pem ansible_ssh_user=ubuntu
-
-[atlas-colombia-beta]
-default
