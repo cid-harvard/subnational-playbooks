@@ -66,6 +66,9 @@
 - name: copy in database
   copy: owner={{atlas_webuser}} src=database.db dest={{atlas_path}}/colombia/
 
+- name: clear nginx cache
+  file: name=/tmp/nginx_cache/ state=absent
+
 - name: reload nginx service
   service: name=nginx state=reloaded
 
