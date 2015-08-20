@@ -9,6 +9,9 @@
   apt: pkg={{item}} state=present
   with_items: system_packages
 
+- name: add config for unattended upgrades
+  copy: src=20auto-upgrades dest=/etc/apt/apt.conf.d/20auto-upgrades
+
 - name: create srv dir
   file: dest={{atlas_path}} owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
 
