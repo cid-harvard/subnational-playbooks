@@ -1,4 +1,6 @@
 ---
+system_ppas:
+    - "ppa:nginx/stable"
 system_packages:
     - language-pack-en
     - git
