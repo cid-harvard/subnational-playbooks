@@ -77,7 +77,7 @@
   file: name=/tmp/nginx_cache/ state=absent
 
 - name: reload nginx service
-  service: name=nginx state=reloaded
+  service: name=nginx state=restarted
 
 - name: reload uwsgi
   supervisorctl: name=uwsgi state=restarted
