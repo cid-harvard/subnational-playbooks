@@ -32,7 +32,10 @@
   sudo_user: "{{atlas_webuser}}"
 
 - name: Install packages based on bower.json.
-  bower: path={{atlas_frontend_path}}
+  shell: "bower install"
+  args:
+      chdir: "{{atlas_frontend_path}}"
+  #bower: path={{atlas_frontend_path}}
   sudo_user: "{{atlas_webuser}}"
 
 - name: get vis-toolkit code
