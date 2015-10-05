@@ -45,16 +45,6 @@
        accept_hostkey=true
   sudo_user: "{{atlas_webuser}}"
 
-- name: Install vis-toolkit packages based on package.json.
-  npm: path={{atlas_vistk_path}}
-  sudo_user: "{{atlas_webuser}}"
-
-- name: run grunt
-  shell: "grunt concat"
-  args:
-      chdir: "{{atlas_vistk_path}}"
-  sudo_user: "{{atlas_webuser}}"
-
 - name: bower link
   shell: "bower link"
   args:
