@@ -1,7 +1,7 @@
 atlas-playbooks
 ===============
 
-Ansible playbooks and Vagrantfile for the Colombia atlas.
+Ansible playbooks and Vagrantfile for the subnational atlases.
 
 Setting Up a Development Environment
 ------------------------------------
@@ -23,14 +23,12 @@ To easily install a virtualized dev environment from scratch:
   the command line, and by running virtualbox.
 
 2. Clone the code (30s):
-  - Run `git clone https://github.com/cid-harvard/colombia-playbooks.git && cd
-    colombia-playbooks`
-  - Run `git clone https://github.com/cid-harvard/colombia-labs.git`
-  - Run `git clone https://github.com/cid-harvard/colombia-prototype.git`
+  - Run `git clone https://github.com/cid-harvard/subnational-playbooks.git && cd
+    subnational-playbooks`
   - Basically you want the above two directories cloned in the playbooks dir.
 
 3. Make sure you have the data (1min):
-  - Get database.db from mali and put it into `colombia-playbooks`.
+  - Get database.db from mali and put it into `subnational-playbooks`.
 
 4. Begin installing (10min)
   - Do `vagrant plugin install vagrant-bindfs`.
@@ -38,7 +36,7 @@ To easily install a virtualized dev environment from scratch:
 
 5. Test it out!
   - Run `vagrant ssh` to get in. Take note of the address that pops up in the
-    output that you can use to get to the webapp. Then `cd /srv/colombia/` and
+    output that you can use to get to the webapp. Then `cd /srv/backend/` and
     run `make dev` to run the backend server.
 
 Basic Usage
@@ -46,12 +44,6 @@ Basic Usage
 - Run “vagrant up” to start the box, "vagrant ssh" to get into the box,
   "vagrant suspend" to save the state of the box (akin to “hibernate”) and
   “vagrant halt” to stop it completely.
-- There are two shared directories with the VM. Any change made within the VM
-  reflects to the outside of the VM, and vice versa.
-    * `vagrant_shared/`: For moving over large SQL dumps etc.
-    * `atlas/`: Contains the main source for the site, a checkout of the
-      atlas-economic-complexity repo. You can write / edit code on this. Inside
-      the box, this maps to the /srv/atlas directory.
 - The usual development process involves working with your editor on the
   “atlas” directory outside the VM and have those changes reflected
   automatically to the inside. You ssh in to stop / start the server processes.
