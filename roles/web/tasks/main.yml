@@ -29,7 +29,7 @@
   sudo_user: "{{atlas_webuser}}"
 
 - name: create a new venv
-  shell: "pyvenv-3.4 --without-pip {{atlas_path}}/env/"
+  shell: "python3.4 -m venv --without-pip {{atlas_path}}/env/"
   sudo_user: "{{atlas_webuser}}"
 
 - name: install pip from get-pip into existing pyvenv
@@ -37,11 +37,11 @@
   sudo_user: "{{atlas_webuser}}"
 
 - name: install atlas python requirements
-  pip: requirements={{atlas_path}}/requirements.txt virtualenv={{atlas_path}}/env/ virtualenv_command=pyvenv-3.4
+  pip: requirements={{atlas_path}}/requirements.txt virtualenv={{atlas_path}}/env/ virtualenv_command="python3.4 -m venv"
   sudo_user: "{{atlas_webuser}}"
 
 - name: install atlas python dev requirements
-  pip: requirements={{atlas_path}}/requirements-dev.txt virtualenv={{atlas_path}}/env/ virtualenv_command=pyvenv-3.4
+  pip: requirements={{atlas_path}}/requirements-dev.txt virtualenv={{atlas_path}}/env/ virtualenv_command="python3.4 -m venv"
   sudo_user: "{{atlas_webuser}}"
   when: atlas_environment == 'dev'
 
