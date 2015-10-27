@@ -1,8 +1,6 @@
 prod1 ansible_ssh_host=52.89.142.70 ansible_ssh_port=22 ansible_ssh_private_key_file=~/.ssh/hks-atlas-web.pem ansible_ssh_user=ubuntu
-prod2 ansible_ssh_host=52.88.31.156 ansible_ssh_port=22 ansible_ssh_private_key_file=~/.ssh/hks-atlas-web.pem ansible_ssh_user=ubuntu
-prod3 ansible_ssh_host=54.149.57.110 ansible_ssh_port=22 ansible_ssh_private_key_file=~/.ssh/hks-atlas-web.pem ansible_ssh_user=ubuntu
+prod4 ansible_ssh_host=52.25.107.119 ansible_ssh_port=22 ansible_ssh_private_key_file=~/.ssh/hks-atlas-web.pem ansible_ssh_user=ubuntu
 
 [atlas-mexico-prod]
 prod1
-prod2
-prod3
+prod4
