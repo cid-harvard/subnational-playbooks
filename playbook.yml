@@ -1,5 +1,6 @@
 ---
 - hosts: all
+  serial: 1
   sudo: yes
   pre_tasks:
     - include: check_git_synced.yml
