@@ -74,7 +74,7 @@
   synchronize: src=database.db dest={{atlas_path}}/colombia/ checksum=yes archive=no copy_links=yes
 
 - name: change db file owner
-  file: owner={{atlas_webuser}} path={{atlas_path}}/colombia/database.db
+  file: owner={{atlas_webuser}} group={{atlas_webuser}} path={{atlas_path}}/colombia/database.db
 
 - name: clear nginx cache
   file: name=/tmp/nginx_cache/ state=absent
