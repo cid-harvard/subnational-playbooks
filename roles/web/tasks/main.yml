@@ -88,6 +88,15 @@
 - name: reload nginx service
   service: name=nginx state=restarted
 
+- name: enable nginx to start on boot
+  service: name=nginx enabled=yes
+
+- name: enable supervisord to start on boot
+  service: name=supervisor enabled=yes
+
+- name: disable system provided uwsgi to start on boot
+  service: name=uwsgi enabled=no
+
 - name: Send notification message via Slack
   local_action:
     module: slack
