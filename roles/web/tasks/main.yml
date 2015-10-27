@@ -77,7 +77,7 @@
   file: name=/tmp/nginx_cache/ state=absent
 
 - name: kill autocreated uwsgi service on install
-  shell: killall uwsgi && touch ~/.killeduwsgi
+  shell: killall -s INT  uwsgi; touch ~/.killeduwsgi
   args:
     creates: ~/.killeduwsgi
 
