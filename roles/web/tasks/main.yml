@@ -81,12 +81,12 @@
   args:
     creates: ~/.killeduwsgi
 
-- name: reload nginx service
-  service: name=nginx state=restarted
-
 - name: reload uwsgi
   supervisorctl: name=uwsgi state=restarted
   when: atlas_environment == 'prod'
+
+- name: reload nginx service
+  service: name=nginx state=restarted
 
 - name: Send notification message via Slack
   local_action:
