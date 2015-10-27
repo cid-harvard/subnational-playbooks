@@ -88,12 +88,20 @@
 - name: clear nginx cache
   file: name=/tmp/nginx_cache/ state=absent
 
+- name: stop uwsgi if already there
+  supervisorctl: name=uwsgi state=stopped
+  when: atlas_environment == 'prod'
+
+- name: reread supervisorctl uwsgi config
+  supervisorctl: name=uwsgi state=present
+  when: atlas_environment == 'prod'
+
 - name: kill ubuntu init.d autoinstalled uwsgi service
   shell: pkill -e -P 1 -f "uwsgi /etc/uwsgi/apps-enabled/atlas.ini"
   ignore_errors: True
 
-- name: reload uwsgi
-  supervisorctl: name=uwsgi state=restarted
+- name: start uwsgi
+  supervisorctl: name=uwsgi state=started
   when: atlas_environment == 'prod'
 
 - name: reload nginx service
