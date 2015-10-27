@@ -76,6 +76,11 @@
 - name: clear nginx cache
   file: name=/tmp/nginx_cache/ state=absent
 
+- name: kill autocreated uwsgi service on install
+  shell: killall uwsgi && touch ~/.killeduwsgi
+  args:
+    creates: ~/.killeduwsgi
+
 - name: reload nginx service
   service: name=nginx state=restarted
 
