@@ -58,16 +58,24 @@
 
 - name: Remove existing nginx config
   file: path=/etc/nginx/sites-enabled/default state=absent
+  tags:
+    - nginx
 
 - name: copy in nginx site config file
   template: src=nginx.{{atlas_environment}} dest=/etc/nginx/sites-enabled/{{atlas_environment}}
+  tags:
+    - nginx
 
 - name: copy in nginx main config files
   template: src=nginx.conf.{{atlas_environment}} dest=/etc/nginx/nginx.conf
+  tags:
+    - nginx
 
 - name: generate htpasswd file
   htpasswd: name=atlas password={{atlas_password}} path=/etc/nginx/htpasswd
   when: atlas_password_protected == True
+  tags:
+    - nginx
 
 - name: copy in flask config
   template: src=conf.py dest={{atlas_path}}/conf/prod.py
@@ -87,6 +95,8 @@
 
 - name: clear nginx cache
   file: name=/tmp/nginx_cache/ state=absent
+  tags:
+    - nginx
 
 - name: stop uwsgi if already there
   supervisorctl: name=uwsgi state=stopped
@@ -106,6 +116,8 @@
 
 - name: reload nginx service
   service: name=nginx state=restarted
+  tags:
+    - nginx
 
 - name: Send notification message via Slack
   local_action:
