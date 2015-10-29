@@ -41,7 +41,7 @@ server {
         uwsgi_buffering on;
         uwsgi_buffers 4 5m;
         uwsgi_buffer_size 8k;
-        uwsgi_connect_timeout: 30s;
+        uwsgi_connect_timeout 30s;
 
         uwsgi_cache microcache;
         uwsgi_cache_key $scheme$host$request_method$request_uri;
