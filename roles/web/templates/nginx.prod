@@ -1,5 +1,5 @@
 uwsgi_cache_path /tmp/nginx_cache levels=1:2
-                 keys_zone=microcache:5m max_size=512m;
+                 keys_zone=microcache:5m max_size=1024m;
 
 upstream flask {
     server 127.0.0.1:3031;
@@ -37,9 +37,17 @@ server {
         add_header Access-Control-Allow-Origin * always;
 
         uwsgi_pass  flask;
+
+        uwsgi_buffering on;
+        uwsgi_buffers 4 5m;
+        uwsgi_buffer_size 8k;
+        uwsgi_connect_timeout: 30s;
+
         uwsgi_cache microcache;
         uwsgi_cache_key $scheme$host$request_method$request_uri;
-        uwsgi_cache_valid 200 1d;
+        uwsgi_cache_valid 200 302 1d;
+        uwsgi_cache_valid 404 1m;
+        uwsgi_cache_valid 500 10s;
         uwsgi_cache_use_stale updating;
 
         include /etc/nginx/uwsgi_params;
