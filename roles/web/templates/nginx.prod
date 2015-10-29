@@ -2,7 +2,7 @@ uwsgi_cache_path /tmp/nginx_cache levels=1:2
                  keys_zone=microcache:5m max_size=1024m;
 
 upstream flask {
-    server unix:/tmp/uwsgi.sock
+    server unix:/tmp/uwsgi.sock;
 }
 
 server {
