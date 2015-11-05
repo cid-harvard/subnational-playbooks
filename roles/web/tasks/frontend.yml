@@ -6,6 +6,7 @@
   git: repo={{atlas_frontend_git_repo}}
        dest={{atlas_frontend_path}}
        version={{atlas_frontend_git_version}}
+       depth=1
        accept_hostkey=true
   sudo_user: "{{atlas_webuser}}"
 
