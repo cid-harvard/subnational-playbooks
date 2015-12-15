@@ -87,8 +87,8 @@
 - name: copy in supervisor config
   template: owner={{atlas_webuser}} src=supervisor.atlas.conf dest=/etc/supervisor/conf.d/atlas.conf
 
-- name: copy in database
-  synchronize: src=database.db dest={{atlas_path}}/colombia/ checksum=yes archive=no copy_links=yes
+#- name: copy in database
+#  synchronize: src=database.db dest={{atlas_path}}/colombia/ checksum=yes archive=no copy_links=yes
 
 - name: change db file owner
   file: owner={{atlas_webuser}} group={{atlas_webuser}} path={{atlas_path}}/colombia/database.db
