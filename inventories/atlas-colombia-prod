@@ -1,0 +1,4 @@
+prod1 ansible_ssh_host=54.86.71.209 ansible_ssh_port=22 ansible_ssh_private_key_file=~/.ssh/bancoldex.pem ansible_ssh_user=ubuntu
+
+[atlas-mexico-prod]
+prod1
