@@ -72,7 +72,7 @@
     - nginx
 
 - name: generate htpasswd file
-  htpasswd: name=atlas password={{atlas_password}} path=/etc/nginx/htpasswd
+  htpasswd: name={{atlas_username|default("atlas")}} password={{atlas_password}} path=/etc/nginx/htpasswd
   when: atlas_password_protected == True
   tags:
     - nginx
