@@ -12,6 +12,5 @@ system_packages:
     - supervisor
     - uwsgi
     - uwsgi-plugin-python3
-    - npm
     - nodejs-legacy
     - ruby
