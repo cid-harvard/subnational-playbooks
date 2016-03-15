@@ -1,0 +1,99 @@
+- name: enable nginx to start on boot
+  service: name=nginx enabled=yes
+
+- name: enable supervisord to start on boot
+  service: name=supervisor enabled=yes
+
+- name: disable system provided uwsgi to start on boot
+  service: name=uwsgi enabled=no
+
+- name: create log dir
+  file: dest=/var/log/colombia/ owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
+
+- name: get backend code
+  git: repo={{atlas_git_repo}}
+       dest={{atlas_path}}
+       version={{atlas_git_version}}
+       accept_hostkey=true
+  sudo_user: "{{atlas_webuser}}"
+
+- name: create a new venv
+  shell: "python3.4 -m venv --without-pip {{atlas_path}}/env/"
+  sudo_user: "{{atlas_webuser}}"
+
+- name: install pip from get-pip into existing pyvenv
+  shell: ". {{atlas_path}}/env/bin/activate; curl https://bootstrap.pypa.io/get-pip.py | python3"
+  sudo_user: "{{atlas_webuser}}"
+
+- name: install atlas python requirements
+  pip: requirements={{atlas_path}}/requirements.txt virtualenv={{atlas_path}}/env/ virtualenv_command="python3.4 -m venv"
+  sudo_user: "{{atlas_webuser}}"
+
+- name: install atlas python dev requirements
+  pip: requirements={{atlas_path}}/requirements-dev.txt virtualenv={{atlas_path}}/env/ virtualenv_command="python3.4 -m venv"
+  sudo_user: "{{atlas_webuser}}"
+  when: atlas_environment == 'dev'
+
+- name: Remove existing nginx config
+  file: path=/etc/nginx/sites-enabled/default state=absent
+  tags:
+    - nginx
+
+- name: copy in nginx site config file
+  template: src=nginx.{{atlas_environment}} dest=/etc/nginx/sites-enabled/{{atlas_environment}}
+  tags:
+    - nginx
+
+- name: copy in nginx main config files
+  template: src=nginx.conf.{{atlas_environment}} dest=/etc/nginx/nginx.conf
+  tags:
+    - nginx
+
+- name: generate htpasswd file
+  htpasswd: name={{atlas_user|default("atlas")}} password={{atlas_password}} path=/etc/nginx/htpasswd
+  when: atlas_password_protected == True
+  tags:
+    - nginx
+
+- name: copy in flask config
+  template: src=conf.py dest={{atlas_path}}/conf/prod.py
+  when: atlas_environment == 'prod'
+
+- name: copy in uwsgi config
+  template: owner={{atlas_webuser}} src=atlas.uwsgi.ini dest=/etc/uwsgi/apps-enabled/atlas.ini
+
+- name: copy in supervisor config
+  template: owner={{atlas_webuser}} src=supervisor.atlas.conf dest=/etc/supervisor/conf.d/atlas.conf
+
+- name: copy in database
+  synchronize: src=database.db dest={{atlas_path}}/colombia/ checksum=yes archive=no copy_links=yes
+
+- name: change db file owner
+  file: owner={{atlas_webuser}} group={{atlas_webuser}} path={{atlas_path}}/colombia/database.db
+
+- name: clear nginx cache
+  file: name=/tmp/nginx_cache/ state=absent
+  tags:
+    - nginx
+
+- name: stop uwsgi if already there
+  supervisorctl: name=uwsgi state=stopped
+  when: atlas_environment == 'prod'
+
+- name: reread supervisorctl uwsgi config
+  supervisorctl: name=uwsgi state=present
+  when: atlas_environment == 'prod'
+
+- name: kill ubuntu init.d autoinstalled uwsgi service
+  shell: pkill -e -P 1 -f "uwsgi /etc/uwsgi/apps-enabled/atlas.ini"
+  ignore_errors: True
+
+- name: start uwsgi
+  supervisorctl: name=uwsgi state=started
+  when: atlas_environment == 'prod'
+
+- name: reload nginx service
+  service: name=nginx state=restarted
+  tags:
+    - nginx
+
