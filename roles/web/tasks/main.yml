@@ -1,11 +1,5 @@
 ---
-- name: install ppas and update cache
-  apt_repository: repo={{item}}
-  with_items: system_ppas
-
-- name: install system packages
-  apt: pkg={{item}} state=present
-  with_items: system_packages
+- include: system.yml
 
 - name: enable nginx to start on boot
   service: name=nginx enabled=yes
@@ -15,15 +9,6 @@
 
 - name: disable system provided uwsgi to start on boot
   service: name=uwsgi enabled=no
-
-- name: add config for unattended upgrades
-  copy: src=20auto-upgrades dest=/etc/apt/apt.conf.d/20auto-upgrades
-
-- name: create srv dir
-  file: dest={{atlas_path}} owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
-
-- name: create vis-toolkit dir
-  file: dest={{atlas_vistk_path}} owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
 
 - name: create log dir
   file: dest=/var/log/colombia/ owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes

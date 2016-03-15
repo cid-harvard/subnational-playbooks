@@ -2,6 +2,9 @@
 - name: create frontend dir
   file: dest={{atlas_frontend_path}} owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
 
+- name: create vis-toolkit dir
+  file: dest={{atlas_vistk_path}} owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
+
 - name: get frontend code
   git: repo={{atlas_frontend_git_repo}}
        dest={{atlas_frontend_path}}
