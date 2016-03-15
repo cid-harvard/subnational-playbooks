@@ -7,6 +7,7 @@
       sudo: no
       when: atlas_environment != 'dev'
     - pause: prompt="Deploying backend ({{atlas_git_version}}) and frontend ({{atlas_frontend_git_version}}) to {{ansible_ssh_host}} with environment type {{atlas_environment}}. Ctrl+C to cancel!"
+      when: pause is undefined
   roles:
     - role: nodesource.node
     - role: web

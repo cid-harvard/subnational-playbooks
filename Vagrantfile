@@ -70,7 +70,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       }
       # Use this to override ansible playbook variables
       ansible.extra_vars = {
-        var1: "value1"
+        pause: false
       }
   end
 
