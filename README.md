@@ -13,9 +13,11 @@ To easily install a virtualized dev environment from scratch:
   you run virtual computers on top of your actual one that you can run a
   separate operating system on, allowing you to install the atlas in its own
   contained environment instead of polluting your computer.
-  - **Vagrant**: http://www.vagrantup.com/downloads.html . Vagrant lets you
-  create, automate, tear down and manage virtualized environments (that run on Virtualbox).
-  - **Ansible**: Install ansible globally with `sudo pip install ansible` (or use easy_install
+  - **Vagrant 1.8.1+**: http://www.vagrantup.com/downloads.html . Vagrant lets you
+  create, automate, tear down and manage virtualized environments (that run on
+  Virtualbox in our case, but can also use other providers like docker, aws,
+  etc).
+  - **Ansible 2.0.1+**: Install ansible globally with `sudo pip install ansible` (or use easy_install
   instead of pip). Ansible automates installation of software packages and
   creation of configuration files, so you don’t have to manually install
   all the little components that are required to get the atlas to work.
@@ -30,26 +32,33 @@ To easily install a virtualized dev environment from scratch:
 3. Make sure you have the data (1min):
   - Get database.db from mali and put it into `subnational-playbooks`.
 
-4. Begin installing (10min)
-  - Do `vagrant plugin install vagrant-bindfs`.
-  - Do `vagrant up`. Should take 5-10 minutes. 
+4. Review the build settings (1min):
+  - Look in `group_vars/dev` to see the settings that will be used e.g. git
+    repository URLs, branches, etc
+  - If this is your first run, you probably don't have to change anything.
+
+5. Begin installing (10min)
+  - (Optional, you don't have to do this if you don't know what it is) Do `vagrant plugin install vagrant-bindfs`.
+  - Do `vagrant up`. Should take 5-10 minutes.
 
 5. Test it out!
   - Run `vagrant ssh` to get in. Take note of the address that pops up in the
     output that you can use to get to the webapp. Then `cd /srv/backend/` and
-    run `make dev` to run the backend server.
+    run `make dev` to run the backend server if it isn't already running.
 
 Basic Usage
 -----------
 - Run “vagrant up” to start the box, "vagrant ssh" to get into the box,
   "vagrant suspend" to save the state of the box (akin to “hibernate”) and
   “vagrant halt” to stop it completely.
-- The usual development process involves working with your editor on the
-  “atlas” directory outside the VM and have those changes reflected
-  automatically to the inside. You ssh in to stop / start the server processes.
-  If you’re going to make configuration changes, it might make sense to add
-  them to the ansible playbooks instead of manually doing them if you want to
-  preserve those changes and have them reflected across all installations.
+- You ssh in to stop / start the server processes. If you’re going to make
+  configuration changes, it might make sense to add them to the ansible
+  playbooks instead of manually doing them if you want to preserve those
+  changes and have them reflected across all installations.
+- It is possible to set up shared directories to outside of the virtual machine
+  so you can use your regular text editor outside the VM to make code changes.
+  To do this, uncomment the "config.vm.synced_folder" settings in the
+  Vagrantfile and restart the VM.
 
 More Info
 ---------
@@ -59,10 +68,7 @@ More Info
 - An ansible.cfg is already set up so you can do `ansible default -m ping` or `ansible-playbook playbook.yml` (which is what `vagrant provision` does)
 - If you want to make ansible do more stuff, check out the ansible module index: http://docs.ansible.com/modules_by_category.html
 - There are also port forwards for the services running inside the VM.
-    * 8000: main HTTP server
-    * 3307: mysql
-    * 6379: redis
-    * 9200: elasticsearch
+    * 8001: main HTTP server
 
 <!--
 - Make sure you have an ssh-agent running (check with `ps aux | grep
@@ -73,8 +79,22 @@ More Info
   (https://help.github.com/articles/using-ssh-agent-forwarding)
   -->
 
-Deploying
----------
-Run `ansible-playbook -i prod/inventory --ask-vault-pass deploy.yml`
+Deploying to Production
+-----------------------
+- If you want to deploy to one of the Harvard servers, you'll be asked for a
+  Vault password to decrypt the settings and keys needed, which Mali has and
+  can add to your Keychain.
+- If you have another computer you want to deploy to, you need your own
+  settings. You need:
+    * A host with ubuntu 14.04 installed on it, that is accessible by SSH and
+      that you have the SSH key for.
+    * A group_vars file that contains the settings for the build, which you can
+      create by copying `group_vars/dev` and editing it as you please.
+    * An inventory file which you can create by copying one of the existing
+      ones in the `inventories` directory to make your own. You need to change
+      the settings for the host name, private key file, etc. You must make sure
+      that at the bottom of the file, the group name within the `[  ]` symbols
+      matches the `group_vars` file you created in the previous step.
+- Run `ansible-playbook -i <path_to_inventory_file> playbook.yml`. Add
+  `--ask-vault-pass` to the end if the group_vars file we use is encrypted.
 
-You'll be asked for a Vault password, which Mali has and can add to your Keychain.
