@@ -13,3 +13,12 @@
     - role: frontend-build
       when: no_frontend is undefined
     - role: web
+  post_tasks:
+    - name: Send notification message via Slack
+      local_action:
+        module: slack
+        domain: cid-harvard.slack.com
+        token: "{{ atlas_slack_token }}"
+        msg: "Deployed backend ({{ atlas_git_version }}) and frontend ({{atlas_frontend_git_version}}) to {{ ansible_ssh_host }} with environment type {{atlas_environment}}."
+      sudo: no
+      when: atlas_environment == 'prod' and atlas_slack_token is defined
