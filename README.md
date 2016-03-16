@@ -3,6 +3,8 @@ atlas-playbooks
 
 Ansible playbooks and Vagrantfile for the subnational atlases.
 
+WARNING: To use the playbooks, **you need to have an OSX or linux computer**.
+
 Setting Up a Development Environment
 ------------------------------------
 
