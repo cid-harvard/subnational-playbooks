@@ -11,7 +11,7 @@
   roles:
     - role: frontend-build
       when: no_frontend is undefined
-    - role: web
+    # - role: web
   post_tasks:
     - name: Send notification message via Slack
       local_action:
