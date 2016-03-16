@@ -73,7 +73,8 @@ More Info
 - An ansible.cfg is already set up so you can do `ansible default -m ping` or `ansible-playbook playbook.yml` (which is what `vagrant provision` does)
 - If you want to make ansible do more stuff, check out the ansible module index: http://docs.ansible.com/modules_by_category.html
 - There are also port forwards for the services running inside the VM.
-    * 8001: main HTTP server
+    * 8001: main HTTP server, forwarded to internal port 80
+    * 8002: `ember serve` HTTP server, forwarded to internal port 4200
 
 <!--
 - Make sure you have an ssh-agent running (check with `ps aux | grep

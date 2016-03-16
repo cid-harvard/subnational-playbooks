@@ -6,6 +6,7 @@ VAGRANTFILE_API_VERSION = "2"
 
 ATLAS_WEB_IP="192.168.33.11"
 ATLAS_WEB_PORT=8001
+ATLAS_EMBER_PORT=8002
 
 puts "========================="
 puts "Atlas host configured to run on #{ATLAS_WEB_IP}"
@@ -28,6 +29,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   config.vm.network :forwarded_port, guest: 80, host:ATLAS_WEB_PORT  # app
+  config.vm.network :forwarded_port, guest: 4200, host:ATLAS_EMBER_PORT  # ember
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
