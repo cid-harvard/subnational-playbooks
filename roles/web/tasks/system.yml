@@ -1,11 +1,11 @@
 ---
 - name: install ppas and update cache
   apt_repository: repo={{item}}
-  with_items: {{system_ppas}}
+  with_items: "{{system_ppas}}"
 
 - name: install system packages
   apt: pkg={{item}} state=present
-  with_items: {{system_packages}}
+  with_items: "{{system_packages}}"
 
 - name: add config for unattended upgrades
   copy: src=20auto-upgrades dest=/etc/apt/apt.conf.d/20auto-upgrades

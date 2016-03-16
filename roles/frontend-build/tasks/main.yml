@@ -2,7 +2,7 @@
 
 - name: install system packages
   apt: pkg={{item}} state=present
-  with_items: {{system_packages}}
+  with_items: "{{system_packages}}"
 
 - name: create frontend dir
   file: dest={{atlas_frontend_path}} owner={{atlas_webuser}} group={{atlas_webuser}} state=directory recurse=yes
