@@ -35,12 +35,17 @@ To easily install a virtualized dev environment from scratch:
   - Run `sudo ansible-galaxy install nodesource.node`.
 
 4. Make sure you have the data (1min):
-  - Get database.db from mali and put it into `subnational-playbooks`.
+  - Get a database file from mali, rename it database.db and put it into `subnational-playbooks`.
 
 5. Review the build settings (1min):
   - Look in `group_vars/dev` to see the settings that will be used e.g. git
     repository URLs, branches, etc
-  - If this is your first run, you probably don't have to change anything.
+  - If you're using another group_vars file than "dev", make sure vagrant is
+    actually using the group_vars file that you want by checking in the
+    Vagrantfile. There should be a line for ansible.groups that says:
+    `"dev" => "default"`. Change `dev` to the name of your group_vars file.
+  - If this is your first run, and you didn't receive information about this,
+    you probably don't have to change anything.
 
 6. Begin installing (10min)
   - (Optional, you don't have to do this if you don't know what it is) Do `vagrant plugin install vagrant-bindfs`.

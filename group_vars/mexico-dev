@@ -1,0 +1,35 @@
+# General Settings
+atlas_webuser: ubuntu
+atlas_environment: prod
+atlas_prefix: /srv
+
+# Backend Settings
+atlas_path: "{{atlas_prefix}}/backend/"
+atlas_git_version: mexico
+atlas_git_repo: git@github.com:cid-harvard/atlas-subnational-api.git
+
+atlas_session_key: OnceUponATimeInColombia
+
+# Frontend Settings
+atlas_frontend_path: "{{atlas_prefix}}/frontend/"
+atlas_frontend_git_version: complejidad-mexico-4
+atlas_frontend_git_repo: git@github.com:cid-harvard/atlas-subnational-frontend.git
+atlas_frontend_build: atlas_colombia_master
+
+atlas_ember_environment:
+  GA: google-analytics-code-here
+  OTHER_LOCALE: en-mex
+  DEFAULT_LOCALE: es-mex
+  DOWNLOAD_URL: https://s3-us-west-2.amazonaws.com/datlas-mexico-downloads-prod/production
+  API_URL: /api
+
+# Vis-toolkit Settings
+atlas_vistk_path: "{{atlas_prefix}}/vis-toolkit/"
+atlas_vistk_git_version: dev
+atlas_vistk_git_repo: git@github.com:cid-harvard/vis-toolkit.git
+
+# Misc Settings
+atlas_password_protected: false
+atlas_password: testing123!@
+
+no_safety_features: true
