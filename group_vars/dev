@@ -32,3 +32,5 @@ atlas_vistk_git_repo: git@github.com:cid-harvard/vis-toolkit.git
 # Misc Settings
 atlas_password_protected: false
 atlas_password: blah
+
+no_safety_features: true
