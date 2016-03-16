@@ -48,8 +48,12 @@ To easily install a virtualized dev environment from scratch:
 
 7. Test it out!
   - Run `vagrant ssh` to get in. Take note of the address that pops up in the
-    output that you can use to get to the webapp. Then `cd /srv/backend/` and
-    run `make dev` to run the backend server if it isn't already running.
+    output that you can use to get to the webapp.
+  - You can do `cd /srv/frontend/` and run `ember build` to build the frontend.
+  - If you only installed the frontend, in that same directory, you can run
+    `ember serve`, then go to `http://localhost:8002/` to see the result.
+  - You can do `cd /srv/backend/` and run `make dev` to run the backend server if it
+    isn't already running.
 
 Basic Usage
 -----------
