@@ -10,4 +10,6 @@
       when: pause is undefined
   roles:
     - role: nodesource.node
+    - role: frontend-build
+      when: no_frontend is undefined
     - role: web

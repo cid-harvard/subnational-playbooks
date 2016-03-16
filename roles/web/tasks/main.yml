@@ -1,7 +1,5 @@
 ---
 - include: system.yml
-- include: frontend.yml
-  when: no_frontend is undefined
 - include: backend.yml
 - name: Send notification message via Slack
   local_action:
