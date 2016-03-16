@@ -29,19 +29,22 @@ To easily install a virtualized dev environment from scratch:
     subnational-playbooks`
   - Basically you want the above two directories cloned in the playbooks dir.
 
-3. Make sure you have the data (1min):
+3. Get the "nodesource.node" playbook (1min):
+  - Run `sudo ansible-galaxy install nodesource.node`.
+
+4. Make sure you have the data (1min):
   - Get database.db from mali and put it into `subnational-playbooks`.
 
-4. Review the build settings (1min):
+5. Review the build settings (1min):
   - Look in `group_vars/dev` to see the settings that will be used e.g. git
     repository URLs, branches, etc
   - If this is your first run, you probably don't have to change anything.
 
-5. Begin installing (10min)
+6. Begin installing (10min)
   - (Optional, you don't have to do this if you don't know what it is) Do `vagrant plugin install vagrant-bindfs`.
   - Do `vagrant up`. Should take 5-10 minutes.
 
-5. Test it out!
+7. Test it out!
   - Run `vagrant ssh` to get in. Take note of the address that pops up in the
     output that you can use to get to the webapp. Then `cd /srv/backend/` and
     run `make dev` to run the backend server if it isn't already running.
