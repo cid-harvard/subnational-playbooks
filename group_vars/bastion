@@ -1,0 +1,37 @@
+---
+# General Settings
+atlas_webuser: vagrant
+atlas_environment: prod
+atlas_prefix: /srv
+
+# Backend Settings
+atlas_path: "{{atlas_prefix}}/backend/"
+atlas_git_version: master
+atlas_git_repo: git@github.com:cid-harvard/atlas-subnational-api.git
+
+atlas_session_key: kittens
+
+# Frontend Settings
+atlas_frontend_path: "{{atlas_prefix}}/frontend/"
+atlas_frontend_git_version: master
+atlas_frontend_git_repo: git@github.com:cid-harvard/atlas-subnational-frontend.git
+atlas_frontend_build: atlas_colombia_master
+
+atlas_ember_environment:
+  GA: put-google-analytics-id-here
+  OTHER_LOCALE: en-col
+  DEFAULT_LOCALE: es-col
+  DOWNLOAD_URL: https://s3.amazonaws.com/datlas-colombia-downloads
+  API_URL: /api
+
+# Vis-toolkit Settings
+atlas_vistk_path: "{{atlas_prefix}}/vis-toolkit/"
+atlas_vistk_git_version: dev
+atlas_vistk_git_repo: git@github.com:cid-harvard/vis-toolkit.git
+
+# Misc Settings
+atlas_password_protected: false
+atlas_password: blah
+
+no_safety_features: true
+no_backend: true
