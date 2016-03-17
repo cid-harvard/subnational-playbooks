@@ -1,6 +1,6 @@
 ---
 # General Settings
-atlas_webuser: vagrant
+atlas_webuser: ubuntu
 atlas_environment: prod
 atlas_prefix: /srv
 
