@@ -76,6 +76,9 @@
   tags:
     - nginx
 
+- name: restart supervisord service
+  service: name=supervisord state=restarted
+
 - name: stop uwsgi if already there
   supervisorctl: name=uwsgi state=stopped
   when: atlas_environment == 'prod'
