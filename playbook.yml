@@ -3,10 +3,10 @@
   serial: 1
   sudo: yes
   pre_tasks:
+    - pause: prompt="Deploying backend ({{atlas_git_version}}) and frontend ({{atlas_frontend_git_version}}) to {{ansible_ssh_host}} with environment type {{atlas_environment}}. Ctrl+C to cancel!"
+      when: no_safety_features is undefined
     - include: check_git_synced.yml
       sudo: no
-      when: no_safety_features is undefined
-    - pause: prompt="Deploying backend ({{atlas_git_version}}) and frontend ({{atlas_frontend_git_version}}) to {{ansible_ssh_host}} with environment type {{atlas_environment}}. Ctrl+C to cancel!"
       when: no_safety_features is undefined
   roles:
     - role: frontend-build
