@@ -6,14 +6,14 @@ atlas_prefix: /srv
 # Backend Settings
 atlas_path: "{{atlas_prefix}}/backend/"
 atlas_git_version: mexico
-atlas_git_repo: git@github.com:cid-harvard/atlas-subnational-api.git
+atlas_git_repo: https://github.com/cid-harvard/atlas-subnational-api.git
 
 atlas_session_key: OnceUponATimeInColombia
 
 # Frontend Settings
 atlas_frontend_path: "{{atlas_prefix}}/frontend/"
-atlas_frontend_git_version: complejidad-mexico-4
-atlas_frontend_git_repo: git@github.com:cid-harvard/atlas-subnational-frontend.git
+atlas_frontend_git_version: complejidad-mexico-5
+atlas_frontend_git_repo: https://github.com/cid-harvard/atlas-subnational-frontend.git
 atlas_frontend_build: atlas_colombia_master
 
 atlas_ember_environment:
@@ -26,7 +26,7 @@ atlas_ember_environment:
 # Vis-toolkit Settings
 atlas_vistk_path: "{{atlas_prefix}}/vis-toolkit/"
 atlas_vistk_git_version: dev
-atlas_vistk_git_repo: git@github.com:cid-harvard/vis-toolkit.git
+atlas_vistk_git_repo: https://github.com/cid-harvard/vis-toolkit.git
 
 # Misc Settings
 atlas_password_protected: false
