@@ -24,18 +24,18 @@ To easily install a virtualized dev environment from scratch:
   creation of configuration files, so you don’t have to manually install
   all the little components that are required to get the atlas to work.
   - **Double check** that the installs worked by running `ansible` and `vagrant` in
-  the command line, and by running virtualbox.
+  the command line, and by running the virtualbox GUI.
 
 2. Clone the code (30s):
   - Run `git clone https://github.com/cid-harvard/subnational-playbooks.git && cd
     subnational-playbooks`
-  - Basically you want the above two directories cloned in the playbooks dir.
 
 3. Get the "nodesource.node" playbook (1min):
+  - Make sure you're in the `subnational-playbooks` directory that you just created.
   - Run `sudo ansible-galaxy install nodesource.node`.
 
-4. Make sure you have the data (1min):
-  - Get a database file from mali, rename it database.db and put it into `subnational-playbooks`.
+4. Make sure you have the data (1 - 20 min):
+  - Get a database file from mali, rename it database.db and put it into the `subnational-playbooks` directory.
 
 5. Review the build settings (1min):
   - Look in `group_vars/dev` to see the settings that will be used e.g. git
@@ -48,7 +48,7 @@ To easily install a virtualized dev environment from scratch:
     you probably don't have to change anything.
 
 6. Begin installing (10min)
-  - (Optional, you don't have to do this if you don't know what it is) Do `vagrant plugin install vagrant-bindfs`.
+  - (Optional, don't do this if you don't know what it is) Do `vagrant plugin install vagrant-bindfs`.
   - Do `vagrant up`. Should take 5-10 minutes.
 
 7. Test it out!
