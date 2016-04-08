@@ -77,7 +77,7 @@
     - nginx
 
 - name: restart supervisord service
-  service: name=supervisor state=restarted
+  service: name=supervisor state=restarted sleep=5
 
 - name: stop uwsgi if already there
   supervisorctl: name=uwsgi state=stopped
