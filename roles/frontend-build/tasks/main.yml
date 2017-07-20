@@ -18,7 +18,7 @@
   sudo_user: "{{atlas_webuser}}"
 
 - name: install sass
-  gem: name=sass state=latest
+  gem: name=sass version=3.4.24 state=present
 
 - name: install ember
   npm: name=ember-cli version=0.2.7 global=yes
