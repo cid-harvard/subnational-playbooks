@@ -65,26 +65,26 @@
   args:
       chdir: "{{atlas_frontend_path}}"
   sudo_user: "{{atlas_webuser}}"
-  
+
 - name: set last_year variable
-  lineinfile:
+  replace:
     path: "{{atlas_frontend_path}}/app/variables/data-variables.js"
-    regexp: 'last_year'
-    line: '"last_year": {{atlas_frontend_last_year}},'
+    regexp: '^\s*"last_year.*,$'
+    replace: '"last_year": {{atlas_frontend_last_year}},'
   when: atlas_frontend_last_year is defined
-  
+
 - name: set first_year variable
-  lineinfile:
+  replace:
     path: "{{atlas_frontend_path}}/app/variables/data-variables.js"
-    regexp: 'first_year'
-    line: '"first_year": {{atlas_frontend_first_year}},'
+    regexp: '^\s*"first_year.*,$'
+    replace: '"first_year": {{atlas_frontend_first_year}},'
   when: atlas_frontend_first_year is defined
-  
+
 - name: set census_year variable
-  lineinfile:
+  replace:
     path: "{{atlas_frontend_path}}/app/variables/data-variables.js"
-    regexp: 'census_year'
-    line: '"census_year": {{atlas_frontend_census_year}},'
+    regexp: '^\s*"census_year.*,$'
+    replace: '"census_year": {{atlas_frontend_census_year}},'
   when: atlas_frontend_census_year is defined
 
 - name: ember build
