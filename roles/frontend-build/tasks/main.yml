@@ -87,6 +87,13 @@
     replace: '"census_year": {{atlas_frontend_census_year}},'
   when: atlas_frontend_census_year is defined
 
+- name: copy over custom translations file
+  copy:
+    src: "translations/"
+    dest: "{{atlas_frontend_path}}/app/locales/"
+    owner: "{{atlas_webuser}}"
+  when: atlas_update_custom_translations is true
+
 - name: ember build
   shell: "cd {{atlas_frontend_path}}; ember build --environment=production"
   args:
