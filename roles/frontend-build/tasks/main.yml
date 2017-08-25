@@ -92,7 +92,7 @@
     src: "translations/"
     dest: "{{atlas_frontend_path}}/app/locales/"
     owner: "{{atlas_webuser}}"
-  when: atlas_update_custom_translations is true
+  when: (atlas_update_custom_translations is defined) and (atlas_update_custom_translations == True)
 
 - name: ember build
   shell: "cd {{atlas_frontend_path}}; ember build --environment=production"
