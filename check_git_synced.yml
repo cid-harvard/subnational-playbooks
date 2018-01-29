@@ -1,5 +1,5 @@
 - name: run git status
-  local_action: shell git status | grep "up-to-date with 'origin/"
+  local_action: shell git status | grep -E "(up to date|up-to-date) with 'origin"
   ignore_errors: True
   register: git_up_to_date
   sudo: no
