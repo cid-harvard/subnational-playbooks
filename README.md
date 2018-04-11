@@ -19,7 +19,7 @@ To easily install a virtualized dev environment from scratch:
   create, automate, tear down and manage virtualized environments (that run on
   Virtualbox in our case, but can also use other providers like docker, aws,
   etc).
-  - **Ansible 2.0.1+**: Install ansible globally with `sudo pip install ansible` (or use easy_install
+  - **Ansible 2**: Install ansible globally with `sudo pip install ansible==2.0.0.2` (or use easy_install
   instead of pip). Ansible automates installation of software packages and
   creation of configuration files, so you don’t have to manually install
   all the little components that are required to get the atlas to work.
