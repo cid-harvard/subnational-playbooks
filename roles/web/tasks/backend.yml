@@ -25,6 +25,10 @@
   shell: ". {{atlas_path}}/env/bin/activate; curl https://bootstrap.pypa.io/get-pip.py | python3"
   sudo_user: "{{atlas_webuser}}"
 
+- name: revert back to a fixed pip version
+  shell: ". {{atlas_path}}/env/bin/activate; pip install pip==9.0.3"
+  sudo_user: "{{atlas_webuser}}"
+
 - name: install atlas python requirements
   pip: requirements={{atlas_path}}/requirements.txt virtualenv={{atlas_path}}/env/ virtualenv_command="python3.4 -m venv"
   sudo_user: "{{atlas_webuser}}"
