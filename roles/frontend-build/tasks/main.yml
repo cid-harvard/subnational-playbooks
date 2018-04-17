@@ -101,6 +101,13 @@
     replace: '"agcensus": { "first_year": {{atlas_frontend_agcensus_first_year}}, "last_year": {{atlas_frontend_agcensus_last_year}} },'
   when: (atlas_frontend_agcensus_first_year is defined) and (atlas_frontend_agcensus_last_year is defined)
 
+- name: set occupation year variables
+  replace:
+    path: "{{atlas_frontend_path}}/app/variables/data-variables.js"
+    regexp: '^\s*"occupation":.*$'
+    replace: '"occupation": { "first_year": {{atlas_frontend_occupation_first_year}}, "last_year": {{atlas_frontend_occupation_last_year}} },'
+  when: (atlas_frontend_occupation_first_year is defined) and (atlas_frontend_occupation_last_year is defined)
+
 - name: copy over custom translations file
   copy:
     src: "translations/"
