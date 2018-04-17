@@ -87,12 +87,26 @@
     replace: '"census_year": {{atlas_frontend_census_year}},'
   when: atlas_frontend_census_year is defined
 
+- name: set agproduct year variables
+  replace:
+    path: "{{atlas_frontend_path}}/app/variables/data-variables.js"
+    regexp: '^\s*"agproduct":.*,$'
+    replace: '"agproduct": { "first_year": {{atlas_frontend_agproduct_first_year}}, "last_year": {{atlas_frontend_agproduct_last_year}} },'
+  when: (atlas_frontend_agproduct_first_year is defined) and (atlas_frontend_agproduct_last_year is defined)
+
+- name: set agcensus year variables
+  replace:
+    path: "{{atlas_frontend_path}}/app/variables/data-variables.js"
+    regexp: '^\s*"agcensus":.*$'
+    replace: '"agcensus": { "first_year": {{atlas_frontend_agcensus_first_year}}, "last_year": {{atlas_frontend_agcensus_last_year}} },'
+  when: (atlas_frontend_agcensus_first_year is defined) and (atlas_frontend_agcensus_last_year is defined)
+
 - name: copy over custom translations file
   copy:
     src: "translations/"
     dest: "{{atlas_frontend_path}}/app/locales/"
     owner: "{{atlas_webuser}}"
-  when: atlas_update_custom_translations is true
+  when: (atlas_update_custom_translations is defined) and (atlas_update_custom_translations == True)
 
 - name: ember build
   shell: "cd {{atlas_frontend_path}}; ember build --environment=production"
